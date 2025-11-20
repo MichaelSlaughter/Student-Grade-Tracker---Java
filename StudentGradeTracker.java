@@ -66,6 +66,7 @@ public class StudentGradeTracker {
                 changeStudentGrade(sc); //calls changeStudentGrade method
             } else if (choice.equals("9")){ // if 9
                 exit(sc); //calls exit method
+                running = false; //ends the loop so the menu doesn't print again when the user is trying to exit
             } else { //if anything else
                 System.out.println("Invalid Choice. Try again."); //tells the user the choice was invalid
             }//end of if else 
