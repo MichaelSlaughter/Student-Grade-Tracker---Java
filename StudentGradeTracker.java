@@ -2,7 +2,7 @@
  *  NAME: Michael Slaughter
     DATE: 11/23/2025
     Version: v1
-    Sources Used: https://www.w3schools.com/java/default.asp , https://www.codecademy.com/enrolled/courses/learn-java, https://classroom.google.com/c/NzgwMzc2ODU2ODkw (classroom contains the slides)
+    Sources Used: https://www.w3schools.com/java/default.asp , https://www.codecademy.com/enrolled/courses/learn-java, https://classroom.google.com/c/NzgwMzc2ODU2ODkw (classroom contains the slides), https://www.w3schools.com/js/js_array_sort.asp?utm_source=chatgpt.com 
     Comments:   
 
     Psuedocode:
@@ -44,7 +44,8 @@ public class StudentGradeTracker {
             System.out.println("5. Sort students by grade"); // Sorts student by grade
             System.out.println("6. Find Student with highest grade"); // Highest Grade (6)
             System.out.println("7. Find Student with lowest grade"); //Lowest Grade (7)
-            System.out.println("8. Exit"); // Exit (8)
+            System.out.println("8. Change student's grade"); //Change a students grade (8)
+            System.out.println("9. Exit"); // Exit (9)
             System.out.print("Enter choice: "); // Tells the user to enter choice 
             String choice = sc.nextLine(); // User Input for the choice 
             if (choice.equals("1")){ //if 1
@@ -62,9 +63,11 @@ public class StudentGradeTracker {
             } else if (choice.equals("7")){ // if 7
                 findLowestGrade(); //calls findLowestGrade
             } else if (choice.equals("8")){ // if 8
-                exit(); //calls exit method
+                changeStudentGrade(sc); //calls changeStudentGrade method
+            } else if (choice.equals("9")){ // if 9
+                exit(sc); //calls exit method
             } else { //if anything else
-                System.out.println("Invalid Choice. Try again.");
+                System.out.println("Invalid Choice. Try again."); //tells the user the choice was invalid
             }//end of if else 
         } //end of while loop
     }// end main
@@ -82,7 +85,7 @@ public class StudentGradeTracker {
             System.out.println("Grade: " + student[5] + " / " + student[4]); //student letter grade / student numeric grade
             System.out.println(); //another line for styling purposes
         } //end of the for loop for students
-    }
+    } //end of viewStudents method
 
     private static void addStudent(Scanner sc) { //addStudent method
         System.out.println("Please enter the student's first name."); //tells the user to enter the student's first name
@@ -190,44 +193,40 @@ public class StudentGradeTracker {
             if (search.equals(" ")){ //if the search is a " " space string
                 found = false; //keeps found at false to print "The Student has not been found" below
             } else if (combined.contains(search)){ //if the search contains one of the student 
-                System.out.println("Name: " + student[0] + " " + student[1] + "\nAge: " + student[2] + "\nYear: " + student[3] + "\nGrade: " + student[5] + " / " + student[4] + "\n"); //that student information will print 
-            found = true; //found turns to true to the for loop ends 
-            } //end of this if statement
+                System.out.println("Name: " + student[0] + " " + student[1] + "\nAge: " + student[2] + "\nYear: " + student[3] + "\nGrade: " + student[5] + " / " + student[4] + "\n"); //that student's information will print 
+                found = true; //found turns to true to the for loop ends 
+            } //end of this if else statement
         } //end of this for loop
-        if (!found) { //if no student isn't found
+        if (!found) { //if no students are found
             System.out.println("Student has not been found."); //tells the user this 
-        } // end of !found if else
-    } // end of this method 
+        } // end of not found if else
+    } // end of search student method 
 
-    private static void findClassAverage(Scanner sc){
+    private static void findClassAverage(Scanner sc){ //find class average method
         if (students.isEmpty()) {//if there are no students
             System.out.println("There are no students."); //tells the user there are no students
             return; //returns acts like exit to end this code
         } //if students size is > 0 (There are students)
-
-        double total = 0; 
-        for (String[] student : students) {
+        double total = 0; //total student grades combined into one value. 0 is the starter value. 
+        for (String[] student : students) { //for loop for students
             total += Double.parseDouble(student[4]); //gets every students grade added together
-        }
-        
-        double average = total / students.size();
-        double roundedAverage = Math.round(average * 100.0) / 100.0;
-        String averageLetterGrade;
-        if (roundedAverage < 0 || roundedAverage > 100) {
-            averageLetterGrade = "N/A";
-        } else if (roundedAverage >= 92) {
-            averageLetterGrade = "A";
-        } else if (roundedAverage >= 83) {
-            averageLetterGrade = "B";
-        } else if (roundedAverage >= 74) {
-            averageLetterGrade = "C";
-        } else if (roundedAverage >= 65) {
-            averageLetterGrade = "D";
-        } else {
-            averageLetterGrade = "F";
-        }
-        System.out.println("The Class Average is a " + averageLetterGrade + " / " + roundedAverage);
-    }
+        } //end of for loop for adding the student's grade together
+        double average = total / students.size(); //finds the average class grade. Divides the students total grades together by the number of students
+        double roundedAverage = Math.round(average * 100.0) / 100.0; //rounds this value to the hundreths place
+        String averageLetterGrade; //starter string for averageLetterGrade
+        if (roundedAverage >= 92) { //if the grade is a 92 or better
+            averageLetterGrade = "A"; //the letter grade is A
+        } else if (roundedAverage >= 83) { //if the grade is a 83 or better
+            averageLetterGrade = "B"; //the letter grade is B
+        } else if (roundedAverage >= 74) { //if the grade is a 74 or better
+            averageLetterGrade = "C"; //the letter grade is C
+        } else if (roundedAverage >= 65) { //if the grade is a 65 or better
+            averageLetterGrade = "D"; //the letter grade is D
+        } else { //if the grade is worse than a 65
+            averageLetterGrade = "F"; //the letter grade is an F
+        } //end of letterGrade scale if else
+        System.out.println("The Class Average is a " + averageLetterGrade + " / " + roundedAverage); //Prints the average grade
+    } //end of findClassAverage method 
 
     private static void sortStudents(Scanner sc){ //sort students method
         if (students.isEmpty()) {//if there are no students
@@ -270,27 +269,94 @@ public class StudentGradeTracker {
         } //end of print student loop
     } //end of sort students method 
 
-    private static void findHighestGrade(){
+    private static void findHighestGrade(){ //findHighestGrade method
         students.sort((s1, s2) -> Double.compare(Double.parseDouble(s2[4]), Double.parseDouble(s1[4]))); //sorts for Highest to Lowest for [4]
-        String[] student = students.get(0);
-        System.out.println("Name: " + student[0] + " " + student[1]);
-        System.out.println("Age: " + student[2]);
-        System.out.println("Year: " + student[3]);
-        System.out.println("Grade: " + student[5] + " / " + student[4]);
-        System.out.println();
+        String[] student = students.get(0); //Gets the first student of the sorted array (student with best grade)
+        System.out.println("Name: " + student[0] + " " + student[1]); //prints the student's name
+        System.out.println("Age: " + student[2]); //prints the student's age
+        System.out.println("Year: " + student[3]); //prints the student's year 
+        System.out.println("Grade: " + student[5] + " / " + student[4]); //prints the student's grade
+        System.out.println(); //prints new line for styline purposes
     } //end of findHighestGrade 
 
-    private static void findLowestGrade(){
+    private static void findLowestGrade(){ //findLowestGrade method
         students.sort((s1, s2) -> Double.compare(Double.parseDouble(s1[4]), Double.parseDouble(s2[4]))); //sorts for Lowest to Highest for [4]
-        String[] student = students.get(0);
-        System.out.println("Name: " + student[0] + " " + student[1]);
-        System.out.println("Age: " + student[2]);
-        System.out.println("Year: " + student[3]);
-        System.out.println("Grade: " + student[5] + " / " + student[4]);
-        System.out.println();
+        String[] student = students.get(0); //Gets the first student of the sorted array (student with worst grade)
+        System.out.println("Name: " + student[0] + " " + student[1]); //prints the student's name
+        System.out.println("Age: " + student[2]); //prints the student's age
+        System.out.println("Year: " + student[3]); //prints the student's year 
+        System.out.println("Grade: " + student[5] + " / " + student[4]); //prints the student's grade
+        System.out.println(); //prints new line for styline purposes
     } // end of findLowest Grade
 
-    private static void exit(){
+    private static void changeStudentGrade(Scanner sc){ //changeStudentGrade method
+        if (students.isEmpty()) {//if there are no students
+            System.out.println("There are no students."); //tells the user there are no students
+            return; //returns acts like an exit to continue the code
+        } //if students size is > 0 (There are students)
+        System.out.println("Student Menu:"); //Student menu header 
+        for (int i = 0; i < students.size(); i++){  // for the each student that exists
+            String[] student = students.get(i); //gets the students in the array 
+            int studentNumber = i + 1; //makes the list number + 1 because the index needs a + 1
+            System.out.println(studentNumber + ". " + student[0] + " " + student[1]); //Prints the students from the array in a list
+        } //end of the for loop for students
+        System.out.println(); //another line for styling purposes
+        System.out.println("Select the student number on the list you would like to change."); //Asks the user to pick the number student on the list they want to select
+        System.out.println("Press 0 for none."); //tells the user to press 0 to cancel their action
+        int chooseStudent = sc.nextInt(); //choose student input integer
+        sc.nextLine(); //another line for the input
+        if (chooseStudent == 0) { //if the choice is 0
+            System.out.println("No student selected."); //tells the user that no student was selected
+            return; //return ends changeStudentGrade
+        } //end of if statement
+        int index = chooseStudent - 1; //converts it back to the index number. So student 1 selected has an index of 0 again
+        if (index < 0 || index >= students.size()) { //if the index is > than the students size (meaning an invalid student number has been selected)
+            System.out.println("Invalid student number."); //tells the user this
+            return; //return ends changeStudentGrade
+        } //end of this if else statement
+        String[] selectedStudent = students.get(index); //creates new list of the student selected
+        System.out.println("You selected: " + selectedStudent[0] + " " + selectedStudent[1]); //Prints the student selected
+        double grade = 0; //starter value for grade
+        boolean validGrade = false; //boolean for a valid grade input
+        while (!validGrade) { //loop for valid grade
+            System.out.println("What would you like to change their grade to?"); //asks the user what the student's grade is 
+            try { //try catch
+                grade = sc.nextDouble(); //grade input line
+                sc.nextLine(); // if reading a line of text after
+                if (grade > 100 || grade < 0){ //if the grade isn't a valid grade (Not between 0 and 100)
+                    validGrade = false; //keeps validInput false to give the user another chance to respond
+                } else { //else for if the input is a valid grade
+                    validGrade = true; // input is valid, end loop
+                } // ends this if else
+            } catch (InputMismatchException e) { //if the input isn't a valid number
+                System.out.println("Invalid input. Please enter a number."); //tells the user to enter a valid number 
+                sc.nextLine(); // clear the invalid input
+            } //end of try catch
+        } //end of while loop for validGrade
+        double roundedGrade = Math.round(grade * 100.0) / 100.0; //rounds the grade to the hundreths place 
+        String gradeString = roundedGrade + ""; //turns the grade into a string
+        String letterGrade; //string for the letter grade
+        if (roundedGrade >= 92) { //if the grade is a 92 or better
+            letterGrade = "A"; //the letter grade is an A
+        } else if (roundedGrade >= 83) { //if the grade is an 83 or better
+            letterGrade = "B"; //the letter grade is a B
+        } else if (roundedGrade >= 74) { //if the grade is a 74 or better
+            letterGrade = "C"; //the letter grade is a C
+        } else if (roundedGrade >= 65) { //if the grade is a 65 or better
+            letterGrade = "D"; //the ltter grade is a D
+        } else { //if the letter grade is worst than a 65
+            letterGrade = "F"; //the ltter grade is an F
+        } //end of if else for letter grade
+        selectedStudent[4] = gradeString; //changes grade for this student
+        selectedStudent[5] = letterGrade; //changes letter grade for this student
+    } //end of changeStudentGrade method
 
-    }
-}
+    private static void exit(Scanner sc){ //exit method
+        if (students.size() < 10){ //if there are less than 10 students in the class (student.size() < 10)
+            System.out.println("The Class must have at least 10 students in order to exit"); //tells the user that there must be at least 10 
+            return; //ends exit
+        } //end of this if else
+        System.out.println("Thanks for using this Student Grade Tracker!"); //thanks the user for using
+        sc.close(); //closes the input scanner
+    } //end of exit method
+} //end of StudentGradeTracker
